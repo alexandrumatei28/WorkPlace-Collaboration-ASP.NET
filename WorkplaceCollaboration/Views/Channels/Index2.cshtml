@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Name = "Index";
+}
+<br />
+
+<h2 class="text-center">Canalele Mele</h2>
+
+<br />
+
+@if (TempData["message"] != null)
+{
+    <div class="alert @ViewBag.Alert p-3 rounded-3 text-center mb-5">
+        @ViewBag.Message
+    </div>
+}
+
+<br />
+
+
+@foreach (WorkplaceCollaboration.Models.Channel channel in ViewBag.Channels)
+{
+
+    
+        <div class="card">
+            @Html.Partial("ChannelInfo", channel)
+
+
+
+            <a class="btn btn-success" href="/Channels/Show/@channel.Id">Afisare canal</a>
+
+
+        </div>
+    
+    <br />
+    <br />
+}
+
+@* Afisarea paginata a canalelor *@
+@{
+    string searchTerm = Context.Request.Query["searchTerm"]; // Obține searchTerm din ViewData
+}
+
+@if (ViewBag.ChannelInclude.Count > 0)
+ {
+<div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link"
+                   href="/Channels/Index2?page=1@(string.IsNullOrEmpty(searchTerm) ? "" : "&searchTerm=" + searchTerm)" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (int i = 1; i <= ViewBag.lastPage; i++)
+            {
+                <li class="page-item">
+                    <a class="page-link"
+                       href="/Channels/Index2?page=@i@(string.IsNullOrEmpty(searchTerm) ? "" : "&searchTerm=" + searchTerm)">
+                        @(i)
+                    </a>
+                </li>
+            }
+            <li class="page-item">
+                <a class="page-link"
+                   href="/Channels/Index?page=@(ViewBag.lastPage)@(string.IsNullOrEmpty(searchTerm) ? "" : "&searchTerm=" + searchTerm)"
+                   aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+}
+
+
+
+
+

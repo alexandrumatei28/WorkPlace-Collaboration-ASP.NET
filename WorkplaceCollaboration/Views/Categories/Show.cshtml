@@ -1,0 +1,42 @@
+﻿@model WorkplaceCollaboration.Models.Category
+@{
+    ViewBag.Title = "Afisare categorie";
+}
+
+
+<h2>@ViewBag.Title</h2>
+
+<br />
+
+<h2>@Model.CategoryName</h2>
+
+<br />
+
+
+@if ((ViewBag.ChannelsInCategory as SelectList)?.Count() > 0){
+    <div class="form-group">
+        @Html.Label("Canale din categoria " + @Model.CategoryName)
+        @Html.DropDownList("SelectedChannelId", ViewBag.ChannelsInCategory as SelectList, "Vizualizare canale", new { @class = "form-control" })
+    </div>
+}
+else
+{
+    <div class="alert alert-danger p-3 rounded-3 text-center mb-5">
+        Deocamdata nu exista canale in categoria @Model.CategoryName
+    </div>
+}
+
+<br />
+
+
+<form method="post" action="/Categories/Delete/@Model.Id">
+
+    <button class="btn btn-danger" type="submit">Sterge categoria</button>
+
+</form>
+
+
+
+<hr />
+<br />
+
